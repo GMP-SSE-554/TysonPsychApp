@@ -47,5 +47,27 @@ namespace SSE554Project1
         {
             return Answer;
         }
+
+        public string GetText()
+        {
+            return Text;
+        }
+
+        public float GetTimeLimit()
+        {
+            return TimeLimit;
+        }
+
+        public override bool Equals(object obj)
+        {
+            Slide otherSlide = (Slide)obj;
+
+            if (otherSlide.Text.Equals(Text) && otherSlide.GetTimeLimit() == TimeLimit && otherSlide.UserInteractionEnabled == UserInteractionEnabled)
+            {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

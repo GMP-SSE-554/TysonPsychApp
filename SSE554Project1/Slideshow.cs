@@ -6,8 +6,53 @@ using System.Threading.Tasks;
 
 namespace SSE554Project1
 {
-    class Slideshow
+    public class Slideshow
     {
-        bool finished;
+        ExcelReader excelReader;
+        List<Slide> slideList = new List<Slide>();
+
+        public Slideshow(string excelSheetAddress)
+        {
+            excelReader = new ExcelReader(excelSheetAddress);
+        }
+
+        public void GenerateSlides()
+        {
+            List<String> slideTextList;
+            List<int> slideTimeList;
+            List<bool> userInteractionList;
+
+            slideTextList = excelReader.ReadColumn(2);
+            slideTimeList = excelReader.ReadColumn(3).Select(int.Parse).ToList();
+            userInteractionList = excelReader.ReadColumn(4).Select(bool.Parse).ToList();
+
+            //Generate slides based on data read from excel sheet
+            for (int i = 0; i < slideTextList.Count; i++)
+            {
+                slideList.Add(new Slide(slideTextList[i], slideTimeList[i], userInteractionList[i]));
+            }
+
+            excelReader.Close();
+        }
+
+        public void BeginSlideshow()
+        {
+
+        }
+
+        public void AdvanceSlide()
+        {
+
+        }
+
+        public void ExportAnswers(string outputFilePath)
+        {
+
+        }
+
+        public List<Slide> GetSlides()
+        {
+            return slideList;
+        }
     }
 }
