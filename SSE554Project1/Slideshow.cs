@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 
 namespace SSE554Project1
 {
     public class Slideshow
     {
         ExcelReader excelReader;
+        Timer timer = new Timer();
+        string currentAnswer;
         int currentSlideIndex = 0;
         bool slideshowFinished = false;
         List<Slide> slideList = new List<Slide>();
@@ -17,6 +18,9 @@ namespace SSE554Project1
         {
             excelReader = new ExcelReader(excelSheetAddress);
             GenerateSlides();
+            timer.Elapsed += AdvanceSlide;
+            currentAnswer = "";
+            UpdateTimers();
         }
 
         private void GenerateSlides()
@@ -43,15 +47,28 @@ namespace SSE554Project1
 
         }
 
-        public void AdvanceSlide(string answer)
+        public void AdvanceSlide()
         {
-            slideList[currentSlideIndex].SubmitAnswer(answer);
+            slideList[currentSlideIndex].SubmitAnswer(currentAnswer);
             currentSlideIndex++;
+
+            UpdateTimers();
+        }
+
+        public async void AdvanceSlide(Object source, ElapsedEventArgs e)
+        {
+            timer.Stop();
+            AdvanceSlide();
         }
 
         public void ExportAnswers(string outputFilePath)
         {
             
+        }
+
+        public void SetAnswer(string answer)
+        {
+            currentAnswer = answer;
         }
 
         public List<Slide> GetSlides()
@@ -67,6 +84,22 @@ namespace SSE554Project1
         public bool SlideshowFinished()
         {
             return slideshowFinished;
+        }
+
+        private void UpdateTimers()
+        {
+            //Set up timer based on current slide's time limit
+            if (slideList[currentSlideIndex].GetTimeLimit() > 0)
+            {
+                timer.Interval = slideList[currentSlideIndex].GetTimeLimit() * 1000;
+                timer.Start();
+            }
+            else
+            {
+                timer.Stop();
+            }
+
+            slideList[currentSlideIndex].Initiate();
         }
     }
 }
