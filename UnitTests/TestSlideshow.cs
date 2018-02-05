@@ -31,10 +31,21 @@ namespace UnitTests
             Slide expectedSlide = new Slide("2", 2, false);
 
             Slideshow slideshow = new Slideshow(@"C:\Users\Tyson\documents\visual studio 2017\Projects\SSE554Project1\UnitTests\TestFile.xlsx");
-            slideshow.AdvanceSlide();
-            slideshow.AdvanceSlide();
+            slideshow.AdvanceSlide("");
+            slideshow.AdvanceSlide("");
 
             Assert.IsTrue(expectedSlide.Equals(slideshow.GetCurrentSlide()));
+        }
+
+        [TestMethod]
+        public void SlideshowSavesAnswerUponAdvance()
+        {
+            Slideshow slideshow = new Slideshow(@"C:\Users\Tyson\documents\visual studio 2017\Projects\SSE554Project1\UnitTests\TestFile.xlsx");
+            slideshow.AdvanceSlide("Testing1");
+            slideshow.AdvanceSlide("Testing2");
+
+            Assert.IsTrue(slideshow.GetSlides()[0].GetAnswer() == "Testing1");
+            Assert.IsTrue(slideshow.GetSlides()[1].GetAnswer() == "Testing2");
         }
     }
 }

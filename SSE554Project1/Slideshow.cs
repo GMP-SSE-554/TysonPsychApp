@@ -43,14 +43,15 @@ namespace SSE554Project1
 
         }
 
-        public void AdvanceSlide()
+        public void AdvanceSlide(string answer)
         {
+            slideList[currentSlideIndex].SubmitAnswer(answer);
             currentSlideIndex++;
         }
 
         public void ExportAnswers(string outputFilePath)
         {
-
+            
         }
 
         public List<Slide> GetSlides()
