@@ -21,9 +21,20 @@ namespace UnitTests
             });
 
             Slideshow slideshow = new Slideshow(@"C:\Users\Tyson\documents\visual studio 2017\Projects\SSE554Project1\UnitTests\TestFile.xlsx");
-            slideshow.GenerateSlides();
 
             Assert.IsTrue(expectedSlides.SequenceEqual(slideshow.GetSlides()));
+        }
+
+        [TestMethod]
+        public void SlideshowAdvancesThroughSlides()
+        {
+            Slide expectedSlide = new Slide("2", 2, false);
+
+            Slideshow slideshow = new Slideshow(@"C:\Users\Tyson\documents\visual studio 2017\Projects\SSE554Project1\UnitTests\TestFile.xlsx");
+            slideshow.AdvanceSlide();
+            slideshow.AdvanceSlide();
+
+            Assert.IsTrue(expectedSlide.Equals(slideshow.GetCurrentSlide()));
         }
     }
 }

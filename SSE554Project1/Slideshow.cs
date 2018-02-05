@@ -9,14 +9,17 @@ namespace SSE554Project1
     public class Slideshow
     {
         ExcelReader excelReader;
+        int currentSlideIndex = 0;
+        bool slideshowFinished = false;
         List<Slide> slideList = new List<Slide>();
 
         public Slideshow(string excelSheetAddress)
         {
             excelReader = new ExcelReader(excelSheetAddress);
+            GenerateSlides();
         }
 
-        public void GenerateSlides()
+        private void GenerateSlides()
         {
             List<String> slideTextList;
             List<int> slideTimeList;
@@ -42,7 +45,7 @@ namespace SSE554Project1
 
         public void AdvanceSlide()
         {
-
+            currentSlideIndex++;
         }
 
         public void ExportAnswers(string outputFilePath)
@@ -53,6 +56,16 @@ namespace SSE554Project1
         public List<Slide> GetSlides()
         {
             return slideList;
+        }
+
+        public Slide GetCurrentSlide()
+        {
+            return slideList[currentSlideIndex];
+        }
+
+        public bool SlideshowFinished()
+        {
+            return slideshowFinished;
         }
     }
 }
