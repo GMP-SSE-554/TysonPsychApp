@@ -41,5 +41,25 @@ namespace SSE554Project1
         {
             workbook.Close();
         }
+
+        public void WriteSlidesToFile(List<Slide> slideList)
+        {
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook OutputWorkbook = xlApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+            Excel.Worksheet OutputSheet = OutputWorkbook.Sheets[1];
+
+            OutputSheet.Cells[1, 1].Value = "Answers";
+            OutputSheet.Cells[1, 2].Value = "Typing Until Typing Began";
+            OutputSheet.Cells[1, 3].Value = "Time Spent Typing";
+            for (int i = 0; i < slideList.Count; i++)
+            {
+                OutputSheet.Cells[2 + i, 1].Value = slideList[i].GetAnswer();
+                OutputSheet.Cells[2 + i, 2].Value = slideList[i].TimeUntilTypingBegan;
+                OutputSheet.Cells[2 + i, 2].Value = slideList[i].TimeSpentTyping;
+            }
+
+            OutputWorkbook.SaveAs(@"C:\Users\Tyson\Desktop\TestOutput.xlsx");
+            OutputWorkbook.Close();
+        }
     }
 }

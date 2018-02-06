@@ -66,6 +66,7 @@ namespace SSE554Project1
             if (currentSlideIndex >= slideList.Count())
             {
                 slideshowFinished = true;
+                excelReader.WriteSlidesToFile(slideList);
             }
             else
             {
