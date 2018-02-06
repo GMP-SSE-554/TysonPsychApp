@@ -29,11 +29,14 @@ namespace SSE554Project1
 
         public void BeginTyping()
         {
-            watch.Stop();
-            TimeUntilTypingBegan = watch.ElapsedMilliseconds / 1000;
-            UserStartedTyping = true;
-            watch.Reset();
-            watch.Start();
+            if (!UserStartedTyping)
+            {
+                watch.Stop();
+                TimeUntilTypingBegan = watch.ElapsedMilliseconds / 1000;
+                UserStartedTyping = true;
+                watch.Reset();
+                watch.Start();
+            }
         }
 
         public void SubmitAnswer(string answer)
@@ -68,6 +71,11 @@ namespace SSE554Project1
             } else {
                 return false;
             }
+        }
+
+        public bool IsEnabled()
+        {
+            return UserInteractionEnabled;
         }
     }
 }

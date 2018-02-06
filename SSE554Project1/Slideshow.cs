@@ -11,8 +11,9 @@ namespace SSE554Project1
         Timer timer = new Timer();
         string currentAnswer;
         int currentSlideIndex = 0;
-        bool slideshowFinished = false;
+        public bool slideshowFinished = false;
         List<Slide> slideList = new List<Slide>();
+        MainWindow mainWindow = null;
 
         public Slideshow(string excelSheetAddress)
         {
@@ -21,6 +22,16 @@ namespace SSE554Project1
             timer.Elapsed += AdvanceSlide;
             currentAnswer = "";
             UpdateTimers();
+        }
+
+        public Slideshow(string excelSheetAddress, MainWindow window)
+        {
+            excelReader = new ExcelReader(excelSheetAddress);
+            GenerateSlides();
+            timer.Elapsed += AdvanceSlide;
+            currentAnswer = "";
+            UpdateTimers();
+            mainWindow = window;
         }
 
         private void GenerateSlides()
@@ -52,7 +63,19 @@ namespace SSE554Project1
             slideList[currentSlideIndex].SubmitAnswer(currentAnswer);
             currentSlideIndex++;
 
-            UpdateTimers();
+            if (currentSlideIndex >= slideList.Count())
+            {
+                slideshowFinished = true;
+            }
+            else
+            {
+                UpdateTimers();
+            }
+
+            if (mainWindow != null)
+            {
+                mainWindow.Update();
+            }
         }
 
         public async void AdvanceSlide(Object source, ElapsedEventArgs e)
@@ -81,7 +104,7 @@ namespace SSE554Project1
             return slideList[currentSlideIndex];
         }
 
-        public bool SlideshowFinished()
+        public bool IsFinished()
         {
             return slideshowFinished;
         }
