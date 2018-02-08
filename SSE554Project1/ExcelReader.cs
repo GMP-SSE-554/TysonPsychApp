@@ -55,7 +55,7 @@ namespace SSE554Project1
             {
                 OutputSheet.Cells[2 + i, 1].Value = slideList[i].GetAnswer();
                 OutputSheet.Cells[2 + i, 2].Value = slideList[i].TimeUntilTypingBegan;
-                OutputSheet.Cells[2 + i, 2].Value = slideList[i].TimeSpentTyping;
+                OutputSheet.Cells[2 + i, 3].Value = slideList[i].TimeSpentTyping;
             }
 
             OutputWorkbook.SaveAs(@"C:\Users\Tyson\Desktop\TestOutput.xlsx");

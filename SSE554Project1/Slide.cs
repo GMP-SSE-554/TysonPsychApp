@@ -32,7 +32,7 @@ namespace SSE554Project1
             if (!UserStartedTyping)
             {
                 watch.Stop();
-                TimeUntilTypingBegan = watch.ElapsedMilliseconds / 1000;
+                TimeUntilTypingBegan =  (double) watch.ElapsedMilliseconds / 1000;
                 UserStartedTyping = true;
                 watch.Reset();
                 watch.Start();
@@ -43,7 +43,12 @@ namespace SSE554Project1
         {
             watch.Stop();
             Answer = answer;
-            TimeSpentTyping = watch.ElapsedMilliseconds / 1000;
+            if (UserStartedTyping)
+            {
+                TimeSpentTyping = (double)watch.ElapsedMilliseconds / 1000;
+            } else {
+                TimeUntilTypingBegan = (double)watch.ElapsedMilliseconds / 1000;
+            }
         }
 
         public string GetAnswer()

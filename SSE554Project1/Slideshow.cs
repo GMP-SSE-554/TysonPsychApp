@@ -61,11 +61,13 @@ namespace SSE554Project1
         public void AdvanceSlide()
         {
             slideList[currentSlideIndex].SubmitAnswer(currentAnswer);
+            currentAnswer = "";
             currentSlideIndex++;
 
             if (currentSlideIndex >= slideList.Count())
             {
                 slideshowFinished = true;
+                timer.Stop();
                 excelReader.WriteSlidesToFile(slideList);
             }
             else

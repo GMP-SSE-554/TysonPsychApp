@@ -28,10 +28,13 @@ namespace SSE554Project1
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
         {
+
             if (TextBox.Text == "")
             {
                 slideshow.GetCurrentSlide().BeginTyping();
             }
+
+            slideshow.SetAnswer(TextBox.Text);
 
             if (e.Key == Key.Return)
             {
