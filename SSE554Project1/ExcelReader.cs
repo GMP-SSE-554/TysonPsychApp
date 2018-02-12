@@ -42,7 +42,7 @@ namespace SSE554Project1
             workbook.Close();
         }
 
-        public void WriteSlidesToFile(List<Slide> slideList)
+        public void WriteSlidesToFile(List<Slide> slideList, string destination)
         {
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook OutputWorkbook = xlApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
@@ -58,7 +58,7 @@ namespace SSE554Project1
                 OutputSheet.Cells[2 + i, 3].Value = slideList[i].TimeSpentTyping;
             }
 
-            OutputWorkbook.SaveAs(@"C:\Users\Tyson\Desktop\TestOutput.xlsx");
+            OutputWorkbook.SaveAs(destination);
             OutputWorkbook.Close();
         }
     }

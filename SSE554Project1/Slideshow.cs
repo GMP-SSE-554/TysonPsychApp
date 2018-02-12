@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
@@ -19,6 +20,7 @@ namespace SSE554Project1
         {
             excelReader = new ExcelReader(excelSheetAddress);
             GenerateSlides();
+            excelReader.Close();
             timer.Elapsed += AdvanceSlide;
             currentAnswer = "";
             UpdateTimers();
@@ -68,7 +70,13 @@ namespace SSE554Project1
             {
                 slideshowFinished = true;
                 timer.Stop();
-                excelReader.WriteSlidesToFile(slideList);
+                string outputFile;
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    outputFile = saveFileDialog.FileName;
+                    excelReader.WriteSlidesToFile(slideList, outputFile);
+                }
             }
             else
             {

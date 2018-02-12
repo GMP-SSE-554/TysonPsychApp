@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace SSE554Project1
@@ -20,10 +14,19 @@ namespace SSE554Project1
 
         public MainWindow()
         {
-            InitializeComponent();
-            slideshow = new Slideshow(@"C:\Users\Tyson\Desktop\TestFile.xlsx", this);
-            Update();
-            TextBox.Focus();
+            string inputFile;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                inputFile = openFileDialog.FileName;
+                InitializeComponent();
+                slideshow = new Slideshow(inputFile, this);
+                Update();
+                TextBox.Focus();
+            } else
+            {
+                Close();
+            }
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
